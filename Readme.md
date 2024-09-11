@@ -20,7 +20,7 @@
         ```
         2024-09-11 17:40:58 138.199.9.179 - country_code: US
         ```
-        [usa geoip](./images/usa-geoip.png)
+        ![usa geoip](./images/usa-geoip.png)
         - UK vpn:
         docker container 'load_balancer' logs:
         ```
@@ -32,7 +32,7 @@
         ```
         2024-09-11 17:49:02 91.203.164.50 - country_code: UA
         ```
-        [world geoip](./images/world-geoip.png)
+        ![world geoip](./images/world-geoip.png)
 2. Active helth check: 
     - Stop one of the nginx server 
     ```
@@ -50,7 +50,7 @@
     2024-09-11 18:02:27 2024/09/11 15:02:27 [error] 7#7: *3395 lua tcp socket connect timed out, when connecting to 172.20.0.5:80, context: ngx.timer
     ```
     Based on the logs our load balancer got 3 consequitive error responses from our world_nginx container with static Ip address: 172.20.0.5, and as a result, on next user request, our backup server will automatically handle request, and user won't get 500 error. 
-    [backup response](./images/backup.png)
+    ![backup response](./images/backup.png)
     - Start up failed server
     ```
     docker compose up nginx_world -d
@@ -66,8 +66,7 @@
     ```
     2024-09-11 18:17:55 172.20.0.7 - - [11/Sep/2024:15:17:55 +0000] "GET / HTTP/1.1" 200 236 "-" "-" "-"
     ```
-    ```
-    [world response](./images/world-geoip.png)
+    ![world response](./images/world-geoip.png)
 
 
 
