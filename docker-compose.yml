@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  nginx_usa_1:
+    image: nginx:latest
+    container_name: nginx_usa_1
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.2  
+    volumes:
+      - ./html/us/index.html:/usr/share/nginx/html/index.html 
+    ports:
+      - "8081:80"  
+    restart: always
+
+  nginx_usa_2:
+    image: nginx:latest
+    container_name: nginx_usa_2
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.3  
+    volumes:
+      - ./html/us/index.html:/usr/share/nginx/html/index.html  
+    ports:
+      - "8082:80"  
+    restart: always
+
+  nginx_uk:
+    image: nginx:latest
+    container_name: nginx_uk
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.4  
+    volumes:
+      - ./html/uk/index.html:/usr/share/nginx/html/index.html  
+    ports:
+      - "8083:80"  
+    restart: always
+
+  nginx_world:
+    image: nginx:latest
+    container_name: nginx_world
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.5  
+    volumes:
+      - ./html/world/index.html:/usr/share/nginx/html/index.html  
+    ports:
+      - "8084:80"  
+    restart: always
+
+  nginx_backup:
+    image: nginx:latest
+    container_name: nginx_backup
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.6  
+    volumes:
+      - ./html/backup/index.html:/usr/share/nginx/html/index.html  
+    ports:
+      - "8085:80"  
+    restart: always
+
+  load_balancer:
+    # image: nginx:latest
+    container_name: load_balancer
+    build: .
+    volumes:
+     - ./load_balancer/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      webnet:
+        ipv4_address: 172.20.0.7
+    ports:
+      - "8086:80" 
+    restart: always
+    
+networks:
+  webnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
